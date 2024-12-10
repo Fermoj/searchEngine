@@ -14,7 +14,7 @@ async function connectDB() {
 //får in elementen som extraherats från reddit sidan
 //först initierar den till mongo DB databasen med följande namn
 //skapar en kollektion i den databsen som heter "posts"
-//Därefter kollar den om objekten och dess content finns i kollektionen, om inte så läggs de till
+//Därefter kollar den om objekten finns i kollektionen, om inte så läggs de till
 async function savePosts(posts) {
   const database = client.db('reddit_scraper')
   const collection = database.collection('posts')
@@ -33,4 +33,3 @@ async function savePosts(posts) {
 }
 
 module.exports = {connectDB, savePosts}
-
