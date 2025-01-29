@@ -22,7 +22,7 @@ app.use(express.json())
 // Use the routes
 app.use('/api', routes);
 
-// Start your server
+// Start server
 app.listen(3000, () => {
   console.log('Server running on port 3000');
 });
@@ -30,7 +30,7 @@ app.listen(3000, () => {
 async function scrapeReddit() {
   const browser = await puppeteer.launch({headless: false})
   const page = await browser.newPage()
-  const link = await page.goto('https://old.reddit.com/')
+  const link = await page.goto('http://localhost:3000/api/posts')
 
   const redditInfo = await page.evaluate(() => {
     let posts = document.querySelectorAll('#siteTable > div[class*="thing"]')

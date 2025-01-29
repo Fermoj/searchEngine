@@ -1,21 +1,18 @@
 const express= require('express')
 const router= express.Router()
 
-const {connectDB, savePosts}= require('./database')
+const {connectDB}= require('./database')
 
-
-// Your collection name
-const collectionName = 'posts';
+connectDB().catch("häär", console.error)
 
 
 router.get('/posts', async (req, res) => {
   try {
-    // Access the collection and fetch the documents
-    const collection = db.collection(collectionName)
-    const posts = await savePosts() // Fetches all documents in the collection
+     const {db, client}= await connectDB()
+    const posts = await collection.find().toArray()
 
-    // Send the fetched data as JSON response
     res.status(200).json(posts)
+    client.close()
   } catch (error) {
     console.error('Error fetching data:', error)
     res.status(500).json({message: 'Error fetching data from database'})
