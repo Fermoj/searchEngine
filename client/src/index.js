@@ -1,8 +1,24 @@
-console.log("hej")
-function greeting(){
-    
+const axios = require('axios');
+
+let posts=[]
+
+async function getPosts() {
+  try {
+    const response = await axios.get('http://localhost:3000/api/posts')
+     posts =  response.data
+     console.log(posts)
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+  }
+
 }
 
+getPosts()
+// function init(){
+//     searchBar= document.querySelector(".formSearch")
+// searchBar.innerHTML
+// }
+// init()
 // Fetch Data in index.js:
 
 // In index.js, you’ll need to write code to fetch data from the server using the fetch API (or another HTTP client like Axios if needed).

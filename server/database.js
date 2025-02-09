@@ -19,7 +19,6 @@ async function connectDB() {
 async function savePosts(posts) {
   const {db} = await connectDB()
   const collection = db.collection('posts')
-  console.log("kollektionen:", collection)
   for (const post of posts) {
     const {user, title} = post
     const elementsInDb = await collection.findOne({

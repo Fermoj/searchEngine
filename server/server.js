@@ -3,6 +3,7 @@ const {connectDB, savePosts} = require('./database')
 
 const express = require('express')
 const routes = require('./routes')
+const path = require('path')
 
 /**
  * 1. Run init function. The init function established an DB connection and runs the redditScraping function.
@@ -18,14 +19,17 @@ const routes = require('./routes')
  */
 
 const app = express()
-app.use(express.json())
-// Use the routes
-app.use('/api', routes);
 
-// Start server
+app.use(express.json())
+
+app.use(express.static(path.join(__dirname, '../client/public')))
+
+app.use( routes)
+
+// Startar server
 app.listen(3000, () => {
-  console.log('Server running on port 3000');
-});
+  console.log('Server running on port 3000')
+})
 
 async function scrapeReddit() {
   const browser = await puppeteer.launch({headless: false})
@@ -46,10 +50,10 @@ async function scrapeReddit() {
     })
     return allPosts
   })
-  //console.log('redditinfo:', redditInfo)
   await savePosts(redditInfo)
- const rerunScraping= setInterval(scrapeReddit, 5 *60 * 1000)
-  console.log('Upprepas', rerunScraping)
+  //använd koden nedan sen
+  //const rerunScraping= setInterval(scrapeReddit, 5 *60 * 1000)
+  // console.log('Upprepas', rerunScraping)
 }
 
 async function init() {
